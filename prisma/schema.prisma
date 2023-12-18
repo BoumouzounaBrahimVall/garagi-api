@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:password@host.docker.internal:3307/garagi"
+}
+
+enum Role {
+  USER
+  MANAGER
+  ADMIN
+}
+
+
+model Compte {
+  id        Int       @id @default(autoincrement())
+  email     String
+  isActive  Boolean
+  password  String
+  role      Role
+  manager Manager?
+  client Client? 
+}
+
+
+model Station {
+  id           Int           @id @default(autoincrement())
+  manager      Manager       @relation(fields: [managerId], references: [id])
+  managerId    Int @unique
+  reservations Reservation[]
+  consultation Consultation[]
+  location     Location  @relation(fields: [locationId], references: [id])
+  locationId   Int @unique
+}
+
+model Location {
+  id   Int    @id @default(autoincrement())
+  lat  Float
+  lon  Float
+  station Station?
+}
+
+model Manager {
+  id         Int      @id @default(autoincrement())
+  compte     Compte   @relation(fields: [compteId], references: [id])
+  compteId   Int @unique
+  station    Station?
+  stationId  Int
+}
+
+model Client {
+  id       Int       @id @default(autoincrement())
+  fullName String
+  compte   Compte     @relation(fields: [compteId], references: [id])
+  compteId Int @unique
+  cars     Vehicle[]
+}
+
+model Reservation {
+  id                  Int                @id @default(autoincrement())
+  car                 Vehicle            @relation(fields: [carId], references: [id])
+  carId               Int
+  station             Station            @relation(fields: [stationId], references: [id])
+  stationId           Int
+  reservationDateTime DateTime
+}
+
+model Vehicle {
+  id            Int              @id @default(autoincrement())
+  owner         Client           @relation(fields: [ownerId], references: [id])
+  ownerId       Int
+  Kilometrage   Float
+  matricule     String
+  model         String
+  reservations Reservation[]
+  consultations Consultation[]
+}
+
+model Consultation {
+  id                 Int                      @id @default(autoincrement())
+  date               DateTime
+  car                Vehicle                  @relation(fields: [carId], references: [id])
+  carId              Int
+  repairerFullName   String
+  services           Service[]
+  problems           ProblemDiscovered[]    
+  station            Station                  @relation(fields: [stationId], references: [id])
+  stationId          Int
+  category           ConsultationCategory
+}
+
+model Service {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  price       Float
+  consultation Consultation @relation(fields: [consultationId], references: [id])
+  consultationId Int @unique
+}
+
+model ProblemDiscovered {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  consultation Consultation @relation(fields: [consultationId], references: [id])
+  consultationId Int @unique
+}
+
+enum ConsultationCategory {
+  VIDANGE
+  DIAGNOSTIC
+  REPARATION
+}
