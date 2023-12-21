@@ -13,7 +13,7 @@ enum Role {
   ADMIN
 }
 
-
+//  npx prisma migrate dev --name init 
 model Compte {
   id        Int       @id @default(autoincrement())
   email     String
