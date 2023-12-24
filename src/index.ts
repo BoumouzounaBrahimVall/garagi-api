@@ -1,7 +1,5 @@
-import { Prisma, PrismaClient } from '@prisma/client'
 import express from 'express'
-
-const prisma = new PrismaClient()
+import router  from './routes'
 const app = express()
 
 app.use(express.json())
@@ -163,12 +161,15 @@ app.get('/feed', async (req, res) => {
   res.json(posts)
 })
 */
+app.use('/', router());
 const server = app.listen(3000, () =>
   console.log(`
 🚀 Server ready at: http://localhost:3000
 ⭐️ See sample requests: http://pris.ly/e/ts/rest-express#3-using-the-rest-api`),
 )
 /**
+ https://www.youtube.com/watch?v=b8ZUb_Okxro
+ https://github.com/AntonioErdeljac/ts-node-mongo-rest-api-tutorial
  import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';

@@ -3,7 +3,11 @@
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
+    "baseUrl": "src",
     "lib": ["esnext"],
-    "esModuleInterop": true
-  }
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noImplicitAny": true
+  },
+  "include": ["src/**/*"],
 }
