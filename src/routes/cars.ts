@@ -1,12 +1,12 @@
 import express from 'express';
 
-import { getAllUsers, deleteUser } from '../controllers/clients';
+//import { getAllUsers, deleteUser } from '../controllers/clients';
 import { isAuthenticated } from '../middlewares';
 
 
 export default (router: express.Router) => {
-  router.get('/cars', isAuthenticated, getAllUsers);
-  router.delete('/cars/:id', isAuthenticated, deleteUser);
+ // router.get('/cars', isAuthenticated, getAllUsers);
+ // router.delete('/cars/:id', isAuthenticated, deleteUser);
 };
 
 /**

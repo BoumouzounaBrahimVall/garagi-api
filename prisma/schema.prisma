@@ -16,8 +16,9 @@ enum Role {
 //  npx prisma migrate dev --name init 
 model Compte {
   id        Int       @id @default(autoincrement())
-  email     String
-  isActive  Boolean
+  email     String  @unique
+  phoneNumber String?
+  isActive  Boolean @default(true)
   password  String
   role      Role
   manager Manager?
@@ -31,8 +32,8 @@ model Station {
   managerId    Int @unique
   reservations Reservation[]
   consultation Consultation[]
-  location     Location  @relation(fields: [locationId], references: [id])
-  locationId   Int @unique
+  location     Location?  @relation(fields: [locationId], references: [id])
+  locationId   Int? @unique
 }
 
 model Location {
@@ -45,16 +46,16 @@ model Location {
 model Manager {
   id         Int      @id @default(autoincrement())
   compte     Compte   @relation(fields: [compteId], references: [id])
-  compteId   Int @unique
+  compteId   Int      @unique
   station    Station?
-  stationId  Int
+  stationId  Int?
 }
 
 model Client {
-  id       Int       @id @default(autoincrement())
+  id       Int        @id @default(autoincrement())
   fullName String
   compte   Compte     @relation(fields: [compteId], references: [id])
-  compteId Int @unique
+  compteId Int        @unique
   cars     Vehicle[]
 }
 
@@ -65,44 +66,51 @@ model Reservation {
   station             Station            @relation(fields: [stationId], references: [id])
   stationId           Int
   reservationDateTime DateTime
+  status ReservationStatus               @default(PENDING)
 }
-
+enum ReservationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  ENDED
+}
 model Vehicle {
   id            Int              @id @default(autoincrement())
   owner         Client           @relation(fields: [ownerId], references: [id])
   ownerId       Int
-  Kilometrage   Float
+  Kilometrage   Float?
   matricule     String
-  model         String
+  model         String?
   reservations Reservation[]
   consultations Consultation[]
 }
 
 model Consultation {
   id                 Int                      @id @default(autoincrement())
-  date               DateTime
+  date               DateTime                 @default(now())
   car                Vehicle                  @relation(fields: [carId], references: [id])
   carId              Int
-  repairerFullName   String
+  repairerFullName   String?
   services           Service[]
   problems           ProblemDiscovered[]    
   station            Station                  @relation(fields: [stationId], references: [id])
   stationId          Int
   category           ConsultationCategory
+  price       Float @default(0.0)
+
 }
 
 model Service {
   id          Int     @id @default(autoincrement())
-  title       String
+  title       String?
   description String
-  price       Float
   consultation Consultation @relation(fields: [consultationId], references: [id])
   consultationId Int @unique
 }
 
 model ProblemDiscovered {
   id          Int     @id @default(autoincrement())
-  title       String
+  title       String?
   description String
   consultation Consultation @relation(fields: [consultationId], references: [id])
   consultationId Int @unique

@@ -1,12 +1,12 @@
 import express from 'express';
 
-import { getAllUsers, deleteUser } from '../controllers/clients';
+import {createClient,deleteClient,getClient} from '../controllers/clients';
 import { isAuthenticated } from '../middlewares';
 
 
 export default (router: express.Router) => {
-  router.get('/clients', isAuthenticated, getAllUsers);
-  router.delete('/clients/:id', isAuthenticated, deleteUser);
+ // router.get('/clients', isAuthenticated, getAllUsers);
+  router.post('/clients/create',createClient);
 };
 /**
  GET "/client/get/:id"

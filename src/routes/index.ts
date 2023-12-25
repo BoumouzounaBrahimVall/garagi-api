@@ -8,7 +8,7 @@ const router = express.Router();
 
 export default (): express.Router => {
  // cars(router);
- // clients(router);
+  clients(router);
  console.log("here")
   comptes(router);
   return router;

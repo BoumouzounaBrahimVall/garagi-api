@@ -1,47 +1,68 @@
-import express from 'express';
+import { client_create, client_delete, client_get, client_update } from "../db/clients";
+import { compte_create, compte_get } from "../db/comptes";
+import { prisma } from "../db/prisma_client";
 
-//import { deleteUserById, getUsers, getUserById } from '../db/users';
+import express from "express";
 
-export const getAllUsers = async (req: express.Request, res: express.Response) => {
+export const createClient = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
-   // const users = await getUsers();
-    //return res.status(200).json(users);
+    const { email, password, role, fullname } = req.body;
+    const compte = await compte_create(email, password, role);
+    const client = await client_create(fullname,compte.id)
+
+    res.status(200).json(client);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
 };
 
-export const deleteUser = async (req: express.Request, res: express.Response) => {
+export const deleteClient = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
-    const { id } = req.params;
+    const { email } = req.body;
+    const compte = await compte_get(email);
+    const client = await client_delete(compte);
 
-    //const deletedUser = await deleteUserById(id);
-
-    return //res.json(deletedUser);
+    res.status(200).json(client);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
-export const updateUser = async (req: express.Request, res: express.Response) => {
+export const changeStateClient = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
-    const { id } = req.params;
-    const { username } = req.body;
+    const { email, fullname } = req.body;
+    const compte = await compte_get(email);
+    const client = await client_update(fullname,compte);
 
-    if (!username) {
-      return res.sendStatus(400);
-    }
-
-   // const user = await getUserById(id);
-    
-    //user.username = username;
-   // await user.save();
-
-   // return res.status(200).json(user).end();
+    res.status(200).json(client);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
+
+export const getClient = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { email } = req.params;
+    const compte = await compte_get(email);
+    const client = await client_get(compte);
+    res.status(200).json(client);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
