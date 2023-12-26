@@ -7,7 +7,7 @@ import comptes from './comptes';
 const router = express.Router();
 
 export default (): express.Router => {
- // cars(router);
+  cars(router);
   clients(router);
  console.log("here")
   comptes(router);

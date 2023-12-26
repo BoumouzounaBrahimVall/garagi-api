@@ -78,7 +78,7 @@ model Vehicle {
   id            Int              @id @default(autoincrement())
   owner         Client           @relation(fields: [ownerId], references: [id])
   ownerId       Int
-  Kilometrage   Float?
+  KilometrageActuel   Float?
   matricule     String
   model         String?
   reservations Reservation[]
@@ -90,6 +90,7 @@ model Consultation {
   date               DateTime                 @default(now())
   car                Vehicle                  @relation(fields: [carId], references: [id])
   carId              Int
+  killometrageConsulte Float?
   repairerFullName   String?
   services           Service[]
   problems           ProblemDiscovered[]    

@@ -1,7 +1,7 @@
 import { prisma } from "./prisma_client";
 
 
-export const compte_create = async (email:string, password:string, role:any) => {
+export const compte_create = async (email:string, password:string, role:any,phoneNumber?:string) => {
   try {
     //const { email, password, role } = body;
 
@@ -11,6 +11,7 @@ export const compte_create = async (email:string, password:string, role:any) => 
         password: password,
         role: role == 0 ? "USER" : "MANAGER",
         isActive: true,
+        phoneNumber: phoneNumber
       },
     });
     return result;

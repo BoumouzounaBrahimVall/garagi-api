@@ -7,6 +7,6 @@ import { changeStateCompte, createCompte, deleteCompte, getCompte } from '../con
 export default (router: express.Router) => {
   router.get('/compte/get/:email', getCompte);
   router.post('/compte/create', createCompte);
-  router.post('/compte/delete', deleteCompte);
-  router.post('/compte/change-state', changeStateCompte);
+  router.delete('/compte/delete/:email', deleteCompte);
+  router.put('/compte/change-state', changeStateCompte);
 };

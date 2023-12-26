@@ -9,8 +9,11 @@ export const createClient = async (
   res: express.Response
 ) => {
   try {
-    const { email, password, role, fullname } = req.body;
-    const compte = await compte_create(email, password, role);
+    const { email, password, role, fullname,phoneNumber } = req.body;
+    let compte = await compte_get(email);
+    if(compte===null){
+    compte= await compte_create(email, password, role,phoneNumber);
+    }
     const client = await client_create(fullname,compte.id)
 
     res.status(200).json(client);
@@ -25,7 +28,7 @@ export const deleteClient = async (
   res: express.Response
 ) => {
   try {
-    const { email } = req.body;
+    const { email } = req.params;
     const compte = await compte_get(email);
     const client = await client_delete(compte);
 
@@ -36,7 +39,7 @@ export const deleteClient = async (
   }
 };
 
-export const changeStateClient = async (
+export const updateClient = async (
   req: express.Request,
   res: express.Response
 ) => {

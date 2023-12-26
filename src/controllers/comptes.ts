@@ -7,8 +7,8 @@ export const createCompte = async (
   res: express.Response
 ) => {
   try {
-    const { email, password, role } = req.body;
-    const result = await compte_create(email, password, role);
+    const { email, password, role, phoneNumber } = req.body;
+    const result = await compte_create(email, password, role,phoneNumber);
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -21,7 +21,7 @@ export const deleteCompte = async (
   res: express.Response
 ) => {
   try {
-    const { email } = req.body;
+    const { email } = req.params;
     const compte = await compte_delete(email)
     res.status(200).json(compte);
   } catch (error) {

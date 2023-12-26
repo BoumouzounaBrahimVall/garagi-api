@@ -51,8 +51,25 @@ export const client_update = async (fullname: string, compte: any) => {
 export const client_get = async (compte: any) => {
   try {
     const client = await prisma.client.findFirst({
+      include:{
+        cars: true,
+        compte: true
+      },
       where: {
         compte: compte,
+      },
+    });
+    return client;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get client");
+  }
+};
+export const client_getById = async (id: number) => {
+  try {
+    const client = await prisma.client.findFirst({
+      where: {
+        id: id,
       },
     });
     return client;
