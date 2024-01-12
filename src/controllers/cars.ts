@@ -1,4 +1,4 @@
-import { vehicle_create, vehicle_delete, vehicle_get, vehicle_getById, vehicle_update, vehicles_getByOwerId } from "../db/cars";
+import { vehicle_create, vehicle_delete, vehicle_get, vehicle_getById, vehicle_getBySubString, vehicle_get_all, vehicle_update, vehicles_getByOwerId } from "../db/cars";
 import {  client_getById } from "../db/clients";
 
 
@@ -62,6 +62,31 @@ export const getVehicleById = async (
     const { matricule } = req.params;
     const vehicle = await vehicle_getById(matricule);
     res.status(200).json(vehicle);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
+export const getVehicles = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const vehicles = await vehicle_get_all();
+    res.status(200).json(vehicles);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
+export const getVehicleBySubString = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { subs } = req.params;
+    const vehicles = await vehicle_getBySubString(subs);
+    res.status(200).json(vehicles);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);

@@ -55,6 +55,7 @@ model Manager {
 model Client {
   id       Int        @id @default(autoincrement())
   fullName String
+  createdAt     DateTime         @default(now())
   compte   Compte     @relation(fields: [compteId], references: [id])
   compteId Int        @unique
   cars     Vehicle[]
@@ -109,7 +110,7 @@ model Service {
   title       String?
   description String
   consultation Consultation @relation(fields: [consultationId], references: [id])
-  consultationId Int @unique
+  consultationId Int 
 }
 
 model ProblemDiscovered {
@@ -117,7 +118,7 @@ model ProblemDiscovered {
   title       String?
   description String
   consultation Consultation @relation(fields: [consultationId], references: [id])
-  consultationId Int @unique
+  consultationId Int 
 }
 
 enum ConsultationCategory {

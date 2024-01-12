@@ -90,7 +90,49 @@ export const vehicle_getById = async ( matricule: string) => {
       throw new Error("Failed to get vehicle");
     }
   };
+  export const vehicle_get_all = async () => {
+    try {
+      const vehicle = await prisma.vehicle.findMany({
+        include:{
+          consultations: true,
+          reservations: true,
+        }
+      });
+      return vehicle;
+    } catch (error) {
+      console.log(error);
+      throw new Error("Failed to get vehicle");
+    }
+  };
+  export const vehicle_getBySubString = async (subs:any) => {
+    try {
+      const vehicle = await prisma.vehicle.findMany({
+        include:{
+          consultations: true,
+          reservations: true,
+        },
+        where:{
+          OR:[
+            {
+              model: {
+                contains:subs
+              }
+            },
+            {
+              matricule: {
+                contains:subs
+              }
+            }
+          ]
+        }
 
+      });
+      return vehicle;
+    } catch (error) {
+      console.log(error);
+      throw new Error("Failed to get vehicle");
+    }
+  };//vehicle_getBySubString
   export const vehicles_getByOwerId = async ( ownerId:any) => {
     try {
       const vehicle = await prisma.vehicle.findMany({

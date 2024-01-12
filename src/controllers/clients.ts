@@ -1,6 +1,5 @@
-import { client_create, client_delete, client_get, client_update } from "../db/clients";
+import { client_create, client_delete, client_get, client_get_all, client_get_subs, client_update } from "../db/clients";
 import { compte_create, compte_get } from "../db/comptes";
-import { prisma } from "../db/prisma_client";
 
 import express from "express";
 
@@ -63,6 +62,33 @@ export const getClient = async (
     const { email } = req.params;
     const compte = await compte_get(email);
     const client = await client_get(compte);
+    res.status(200).json(client);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
+export const getAllClient = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const client = await client_get_all();
+    res.status(200).json(client);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
+//getClientsBySubString
+
+export const getClientsBySubString = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { subs } = req.params;
+    const client = await client_get_subs(subs);
     res.status(200).json(client);
   } catch (error) {
     console.log(error);

@@ -65,6 +65,43 @@ export const client_get = async (compte: any) => {
     throw new Error("Failed to get client");
   }
 };
+
+export const client_get_subs = async (subs: any) => {
+  try {
+    const clients = await prisma.client.findMany({
+      include:{
+        cars: {
+          include:{
+            consultations:true
+          }
+        },
+        compte: true
+      },
+      where: { 
+        fullName: {
+          contains: subs
+        }        
+      },
+    });
+    return clients;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get clients by substring");
+  }
+};
+export const client_get_all = async () => {
+  try {
+    const client = await prisma.client.findMany({
+      include:{
+        compte:true
+      }
+    });
+    return client;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get client");
+  }
+};
 export const client_getById = async (id: number) => {
   try {
     const client = await prisma.client.findFirst({

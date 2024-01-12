@@ -2,7 +2,7 @@ import express from 'express';
 
 //import { getAllUsers, deleteUser } from '../controllers/clients';
 import { isAuthenticated } from '../middlewares';
-import { createVehicle, deleteVehicle, getVehicleById, getVehicleByOwnerId, updateVehicle } from '../controllers/cars';
+import { createVehicle, deleteVehicle, getVehicleById, getVehicleByOwnerId, getVehicleBySubString, getVehicles, updateVehicle } from '../controllers/cars';
 
 
 export default (router: express.Router) => {
@@ -11,6 +11,10 @@ export default (router: express.Router) => {
 	router.delete('/cars/delete/:matricule/:client_id',deleteVehicle );
 	router.get('/cars/:ownerId',getVehicleByOwnerId );
 	router.get('/cars/matricule/:matricule',getVehicleById );
+	router.get('/cars/',getVehicles );
+	router.get('/cars/substring/:subs',getVehicleBySubString );
+
+
 };
 
 /**

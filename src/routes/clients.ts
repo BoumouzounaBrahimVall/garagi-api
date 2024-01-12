@@ -1,6 +1,6 @@
 import express from 'express';
 
-import {createClient,deleteClient,getClient, updateClient} from '../controllers/clients';
+import {createClient,deleteClient,getAllClient,getClient, getClientsBySubString, updateClient} from '../controllers/clients';
 import { isAuthenticated } from '../middlewares';
 
 
@@ -9,6 +9,9 @@ export default (router: express.Router) => {
   router.put('/clients/update',updateClient);
   router.delete('/clients/delete/:email',deleteClient);
   router.get('/clients/get/:email',getClient);
+  router.get('/clients/getAll',getAllClient);
+	router.get('/clients/substring/:subs',getClientsBySubString);
+
 
 };
 /**
