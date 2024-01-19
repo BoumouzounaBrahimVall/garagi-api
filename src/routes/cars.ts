@@ -6,12 +6,27 @@ import { createVehicle, deleteVehicle, getVehicleById, getVehicleByOwnerId, getV
 
 
 export default (router: express.Router) => {
+	
+	/*
+	*/
 	router.post('/cars/create',createVehicle );
+	/*
+	*/
 	router.put('/cars/update',updateVehicle );
+	/*
+	*/
 	router.delete('/cars/delete/:matricule/:client_id',deleteVehicle );
+	/*
+	*/
 	router.get('/cars/:ownerId',getVehicleByOwnerId );
+	/*
+	*/
 	router.get('/cars/matricule/:matricule',getVehicleById );
+	/*
+	*/
 	router.get('/cars/',getVehicles );
+	/*
+	*/
 	router.get('/cars/substring/:subs',getVehicleBySubString );
 
 

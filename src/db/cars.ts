@@ -137,7 +137,12 @@ export const vehicle_getById = async ( matricule: string) => {
     try {
       const vehicle = await prisma.vehicle.findMany({
         include:{
-          consultations: true,
+          consultations: {
+            include:{
+              services: true,
+              problems: true,
+            }
+          },
           reservations: true,
         },
         where: {
