@@ -90,6 +90,24 @@ export const vehicle_getById = async ( matricule: string) => {
       throw new Error("Failed to get vehicle");
     }
   };
+  
+export const vehicle_getByAutoIncrementId = async ( id: any) => {
+  try {
+    const vehicle = await prisma.vehicle.findFirst({
+      include:{
+        consultations: true,
+        reservations: true,
+      },
+      where: {
+       id:id
+      },
+    });
+    return vehicle;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get vehicle");
+  }
+};
   export const vehicle_get_all = async () => {
     try {
       const vehicle = await prisma.vehicle.findMany({
