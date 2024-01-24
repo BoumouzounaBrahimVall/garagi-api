@@ -2,11 +2,17 @@ import express from 'express';
 
 //import { getAllUsers, deleteUser } from '../controllers/clients';
 import { isAuthenticated } from '../middlewares';
+import { create } from 'domain';
+import { createReservation } from 'controllers/reservations';
 
 
 export default (router: express.Router) => {
   //router.get('/reservations', isAuthenticated, getAllUsers);
   //router.delete('/reservations/:id', isAuthenticated, deleteUser);
+	//POST: "/reservations/reserve/"
+	router.post('/reservations/reserve',createReservation);
+
+
 };
 /**
  GET "/reservations/client/:id-client"

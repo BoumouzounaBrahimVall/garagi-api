@@ -14,7 +14,7 @@ export const vehicle_create = async (matricule:string,model:string,client_id:any
     return result;
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to delete vehicle");
+    throw new Error("Failed to create vehicle");
   }
 };
 
