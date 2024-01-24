@@ -8,10 +8,10 @@ export default (router: express.Router) => {
   //router.get('/reservations', isAuthenticated, getAllUsers);
   //router.delete('/reservations/:id', isAuthenticated, deleteUser);
 	//POST: "/reservations/reserve/"
-	router.post('/reservations/reserve',createReservation);
+	router.post('/reservations/create',createReservation);
 	router.put('/reservations/update',updateReservation);
-	router.get('/reservations/',getReservations);
-	router.get('reservations/get/:clientId',getReservationByClientId);
+	router.get('/reservations/get-all',getReservations);
+	router.get('/reservations/get/:clientId',getReservationByClientId);
 
 };
 /**

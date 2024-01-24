@@ -85,7 +85,11 @@ export const getVehicleBySubString = async (
 ) => {
   try {
     const { subs } = req.params;
-    const vehicles = await vehicle_getBySubString(subs);
+    let vehicles:any;
+    if(subs==null || subs.length===0){
+      vehicles= await vehicle_get_all();
+    }
+    else vehicles = await vehicle_getBySubString(subs);
     res.status(200).json(vehicles);
   } catch (error) {
     console.log(error);

@@ -38,7 +38,7 @@ export const updateReservation = async (
         res: express.Response
         ) => {
         try {
-          const reservations = Reservation_get_all(); 
+          const reservations = await Reservation_get_all(); 
             res.status(200).json(reservations);
         } catch (error) {
             console.log(error);
@@ -50,6 +50,7 @@ export const updateReservation = async (
             req: express.Request,
             res: express.Response
           ) => {
+            console.log("vfsdgv")
             try {
               const { clientId } = req.params;
               const reservations = await reservations_getByClientId(clientId);

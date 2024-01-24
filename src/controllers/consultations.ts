@@ -1,5 +1,5 @@
-import { vehicle_create, vehicle_delete, vehicle_get, vehicle_getById, vehicle_update, vehicles_getByOwerId } from "../db/cars";
-import {  consultation_create } from "../db/consultations";
+import {  vehicle_getById } from "../db/cars";
+import {  consultation_create, consultation_get_all } from "../db/consultations";
 
 
 import express from "express";
@@ -44,7 +44,19 @@ export const createConsultation = async (
   }
 };
 
+export const getAllConsultation = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const consultations= await consultation_get_all();
+    res.status(200).json(consultations);
 
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+}
 
 /*
 

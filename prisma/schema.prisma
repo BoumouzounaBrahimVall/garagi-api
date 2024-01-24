@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:password@localhost:3307/garagi"
+  url      = "mysql://root:password@host.docker.internal:3307/garagi"
 }
 //  url      = "mysql://root:password@host.docker.internal:3307/garagi"
 

@@ -57,7 +57,7 @@ export const reservations_getByClientId = async (clientId: any) => {
         const reservations = await prisma.reservation.findMany({
             where: {
                 car: {
-                    ownerId: clientId
+                    ownerId: Number(clientId)
                 }
             },
             include:{
