@@ -1,9 +1,7 @@
 import express from 'express';
 
 //import { getAllUsers, deleteUser } from '../controllers/clients';
-import { isAuthenticated } from '../middlewares';
-import { create } from 'domain';
-import { createReservation } from 'controllers/reservations';
+import { createReservation } from '../controllers/reservations';
 
 
 export default (router: express.Router) => {

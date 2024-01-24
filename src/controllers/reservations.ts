@@ -1,4 +1,4 @@
-import { reservation_create } from "db/Reservation";
+import { reservation_create } from "../db/Reservation";
 import express from "express";
 
 export const createReservation = async (
