@@ -19,3 +19,55 @@ export const reservation_create = async (stationId: number, vehicleId: number, d
         throw new Error("Failed to create reservation");
     }
 }
+
+export const reservation_update = async (reservationId: number, status: any) => {
+    try {
+        const reservation = await prisma.reservation.update({
+            where: {
+                id: reservationId
+            },
+            data: {
+                status: status
+            }
+        })
+        return reservation;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to update reservation");
+    }
+}
+
+export const Reservation_get_all = async () => {
+    try {
+        const reservations = await prisma.reservation.findMany({
+            include:{
+                car:true,
+                station:true
+            }
+        })
+        return reservations;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get all reservations");
+    }
+}
+
+export const reservations_getByClientId = async (clientId: any) => {
+    try {
+        const reservations = await prisma.reservation.findMany({
+            where: {
+                car: {
+                    ownerId: clientId
+                }
+            },
+            include:{
+                car:true,
+                station:true
+            }
+        })
+        return reservations;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get all reservations by Client Id");
+    }
+}

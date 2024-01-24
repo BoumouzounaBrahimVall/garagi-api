@@ -1,7 +1,7 @@
 import express from 'express';
 
 //import { getAllUsers, deleteUser } from '../controllers/clients';
-import { createReservation } from '../controllers/reservations';
+import { createReservation, getReservationByClientId, getReservations, updateReservation } from '../controllers/reservations';
 
 
 export default (router: express.Router) => {
@@ -9,7 +9,9 @@ export default (router: express.Router) => {
   //router.delete('/reservations/:id', isAuthenticated, deleteUser);
 	//POST: "/reservations/reserve/"
 	router.post('/reservations/reserve',createReservation);
-
+	router.put('/reservations/update',updateReservation);
+	router.get('/reservations/',getReservations);
+	router.get('reservations/get/:clientId',getReservationByClientId);
 
 };
 /**
