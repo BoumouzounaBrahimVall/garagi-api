@@ -1,4 +1,4 @@
-import { reservation_create } from "../db/Reservation";
+import { reservation_create } from "../db/reservations";
 import express from "express";
 
 export const createReservation = async (
@@ -7,7 +7,7 @@ export const createReservation = async (
     ) => {
     try {
         const {carId,stationId, reservationDateTime} = req.body;
-        const reservation = await reservation_create(carId,stationId,reservationDateTime);
+        const reservation = await reservation_create(stationId,carId,reservationDateTime);
         res.status(200).json(reservation);
        
         res.status(200).json();
