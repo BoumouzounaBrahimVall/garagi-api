@@ -65,7 +65,18 @@ export const reservations_getByClientId = async (clientId: any) => {
                 station:true
             }
         })
-        return reservations;
+        const transformedReservations = reservations.map(obj => ({  
+            carId: obj.carId,
+            stationId: obj.stationId,
+            id: 2,
+            reservationDateTime: obj.reservationDateTime,
+            status: obj.status,
+            carModel: obj.car.model,
+            stationName: obj.station.name,
+            
+          }));
+
+        return transformedReservations;
     } catch (error) {
         console.log(error);
         throw new Error("Failed to get all reservations by Client Id");

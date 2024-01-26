@@ -50,7 +50,6 @@ export const updateReservation = async (
             req: express.Request,
             res: express.Response
           ) => {
-            console.log("vfsdgv")
             try {
               const { clientId } = req.params;
               const reservations = await reservations_getByClientId(clientId);

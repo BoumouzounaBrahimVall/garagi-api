@@ -1,4 +1,3 @@
-import {  vehicle_getById } from "../db/cars";
 import {  consultation_create, consultation_get_all } from "../db/consultations";
 
 
@@ -9,15 +8,9 @@ export const createConsultation = async (
   res: express.Response
 ) => {
   try {
-    /**
-     * matricule: string, model: string, client_id: number, km?: number
-     */
-   // const { client_id, matricule, model, km } = req.body;
-   // const client = await client_getById(client_id);
-   // const vehicle = await vehicle_create(matricule,model,client?.id,km)
 
    const {
-    matricule,
+    carId,
     killometrageConsulte,
     repairerFullName,
     stationId,
@@ -26,9 +19,9 @@ export const createConsultation = async (
     services,
     problems
   } = req.body;
-  const vehicle = await vehicle_getById(matricule);
+  //const vehicle = await vehicle_getById(matricule);
 
-  const consultation =await consultation_create(vehicle?.id,
+  const consultation =await consultation_create(carId,
     killometrageConsulte,
     repairerFullName,
     stationId,
