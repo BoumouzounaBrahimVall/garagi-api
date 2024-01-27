@@ -8,8 +8,8 @@ const app = express()
 app.use(express.json())
 
 app.use('/', router());
-// Planifier la tâche pour s'exécuter à minuit tous les jours
-cron.schedule('0 0 * * *', async () => {
+// Planifier la tâche pour s'exécuter à 19:30 tous les jours
+cron.schedule('30 19 * * *', async () => {
   try {
       console.log('Exécution de la mise à jour des réservations expirées...');
       const updatedReservations = await reservations_updateToExpired();
