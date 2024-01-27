@@ -60,3 +60,23 @@ export const getCompte = async (
     return res.sendStatus(400);
   }
 };
+
+export const SignInCompte = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { email, password } = req.body;
+
+    const compte = await compte_get(email)
+    if(!compte) return res.status(400).json({ message: "wrong email" });
+    if ( compte?.password === password) {
+      res.status(200).json(compte);
+    } else {
+      res.status(400).json({ message: "wrong password" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+}

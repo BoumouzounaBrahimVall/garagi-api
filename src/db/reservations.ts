@@ -82,3 +82,35 @@ export const reservations_getByClientId = async (clientId: any) => {
         throw new Error("Failed to get all reservations by Client Id");
     }
 }
+
+export const reservations_updateToExpired = async () => {
+    try {
+        const reservations = await prisma.reservation.updateMany({
+            where: {
+                reservationDateTime: {
+                   gte: new Date()
+                }
+            },
+            data: {
+                status: "ENDED"
+            }
+        })
+        return reservations;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to update reservations to expired");
+    }
+}
+/**
+ * 
+ * # ┌────────────── second (optional)
+# │ ┌──────────── minute
+# │ │ ┌────────── hour
+# │ │ │ ┌──────── day of month
+# │ │ │ │ ┌────── month
+# │ │ │ │ │ ┌──── day of week
+# │ │ │ │ │ │
+# │ │ │ │ │ │
+# * * * * * *
+ * 
+ * **/

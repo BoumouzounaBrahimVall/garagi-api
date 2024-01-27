@@ -1,7 +1,7 @@
 //createCompte
 
 import express from 'express';
-import { changeStateCompte, createCompte, deleteCompte, getCompte } from '../controllers/comptes';
+import { SignInCompte, changeStateCompte, createCompte, deleteCompte, getCompte } from '../controllers/comptes';
 
 
 export default (router: express.Router) => {
@@ -17,4 +17,6 @@ export default (router: express.Router) => {
   /*
 	*/
   router.put('/compte/change-state', changeStateCompte);
+  //sign in
+  router.post('/compte/sign-in', SignInCompte);
 };
