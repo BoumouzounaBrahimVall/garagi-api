@@ -65,3 +65,22 @@ export const compte_get = async (email: string) => {
     throw new Error("Failed to get compte");
   }
 };
+
+export const compte_get_with_infos = async (email: string) => {
+  try {
+    const compte = await prisma.compte.findFirst({
+      where: {
+        email: email,
+      },
+      include:{
+        client:true,
+        manager:true
+      }
+    });
+    
+    return compte;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get compte");
+  }
+};

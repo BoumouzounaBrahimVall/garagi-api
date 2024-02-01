@@ -9,7 +9,7 @@ export default (router: express.Router) => {
 	
 	/*
 	*/
-	router.post('/cars/create',createVehicle );
+	router.post('/cars/create',isAuthenticated,createVehicle );
 	/*
 	*/
 	router.put('/cars/update',updateVehicle );
@@ -18,13 +18,13 @@ export default (router: express.Router) => {
 	router.delete('/cars/delete/:matricule/:client_id',deleteVehicle );
 	/*
 	*/
-	router.get('/cars/:ownerId',getVehicleByOwnerId );
+	router.get('/cars/:ownerId',isAuthenticated,getVehicleByOwnerId );
 	/*
 	*/
 	router.get('/cars/matricule/:matricule',getVehicleById );
 	/*
 	*/
-	router.get('/cars/',getVehicles );
+	router.get('/cars/',isAuthenticated,getVehicles );
 	/*
 	*/
 	router.get('/cars/substring/:subs',getVehicleBySubString );

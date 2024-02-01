@@ -1,25 +1,19 @@
 import express from 'express';
+import jwt from "jsonwebtoken";
+import { SECRET_ACCESS_TOKEN } from '../utils/constants';
 
+export const isAuthenticated = async (req: express.Request, res: express.Response, next: express.NextFunction)=> {
+  const authHeader = req.headers['authorization']
+  console.log("authorisation: "+authHeader)
+  const token = authHeader && authHeader.split(' ')[1]
+  console.log("token: "+token)
 
-export const isAuthenticated = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  try {
-    const sessionToken = req.cookies['ANTONIO-AUTH'];
+  if (token==null) return res.sendStatus(401)
 
-    if (!sessionToken) {
-      return res.sendStatus(403);
-    }
-
-    const existingUser =1; //await getUserBySessionToken(sessionToken);
-
-    if (!existingUser) {
-      return res.sendStatus(403);
-    }
-
-    //merge(req, { identity: existingUser });
-
-    return next();
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
+  jwt.verify(token, SECRET_ACCESS_TOKEN as string, (err: any, user: any) => {
+    console.log(err)
+    
+    if (err) return res.sendStatus(403)
+    next()
+  })
 }
