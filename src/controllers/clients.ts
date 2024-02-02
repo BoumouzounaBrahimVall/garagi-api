@@ -1,6 +1,6 @@
 import { client_create, client_delete, client_get, client_get_all, client_get_subs, client_update } from "../db/clients";
 import { compte_create, compte_get } from "../db/comptes";
-
+import bcrypt from "bcrypt";
 import express from "express";
 
 export const createClient = async (
@@ -11,7 +11,10 @@ export const createClient = async (
     const { email, password, role, fullname,phoneNumber } = req.body;
     let compte = await compte_get(email);
     if(compte===null){
-    compte= await compte_create(email, password, role,phoneNumber);
+      // hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    compte= await compte_create(email, hashedPassword, role,phoneNumber);
     }
     const client = await client_create(fullname,compte.id)
 
